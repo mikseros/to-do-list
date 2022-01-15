@@ -1,3 +1,4 @@
+<?php require 'db_conn.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,13 +18,29 @@
                 <button type="submit">Add &nbsp; <span>&#43;</span></button>
             </form>
         </div>
+        <?php 
+            $todos = $conn->query("SELECT * FROM todos ORDER BY id DESC");
+        ?>
         <div class="show-todo-section">
-            <div class="todo-item">
-                <input type="checkbox">
-                <h2>This is</h2>
-                <br>
-                <small>created: 14/01/2022</small>
-            </div>
+            <?php if($todos->rowCount() <= 0) { ?>
+                <div class="todo-item">
+                    <div class="empty">
+                        <img src="img/f.png" width=100% />
+                        <img src="img/Ellipsis.gif" width=80px />
+                    </div>
+                </div>
+            <?php } ?>
+
+            <?php while($todo = $todos->fetch(PDO::FETCH_ASSOC)) { ?>
+                <div class="todo-item">
+                    <span id="<?php echo $todo['id']; ?>"
+                          class="remove-to-do">x</span>
+                    <input type="checkbox">
+                    <h2><?php echo $todo['title'] ?></h2>
+                    <br>
+                    <small>created: 14/01/2022</small>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </body>
