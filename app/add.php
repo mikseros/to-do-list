@@ -14,7 +14,7 @@ if(isset($_POST['title'])) {
         if($res) {
             header("Location: ../index.php?mess=success");
         } else {
-            header("Location: ../infex.php");
+            header("Location: ../index.php");
         }
         $conn = null;
         exit();
